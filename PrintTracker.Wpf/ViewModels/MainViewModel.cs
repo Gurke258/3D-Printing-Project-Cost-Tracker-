@@ -4,12 +4,16 @@ using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Text;
+using System.Windows.Input;
 
 namespace PrintTracker.Wpf.ViewModels
 {
     public class MainViewModel : ViewModelBase
     {
         public ObservableCollection<PrintProject> PrintProjects { get; } = new();
+        public ICommand DeleteCommand { get; }
+        public ICommand AddCommand { get; }
+
 
         private PrintProject? _selectedProject;
         public PrintProject? SelectedProject
@@ -21,6 +25,41 @@ namespace PrintTracker.Wpf.ViewModels
         public MainViewModel()
         {
             LoadTestData();
+            DeleteCommand = new RelayCommand(DeleteProject, CanDeleteProject);
+            AddCommand = new RelayCommand(AddProject);
+
+        }
+
+        private bool CanDeleteProject(object? parameter)
+        {
+            // Löschen nur erlauben, wenn ein Projekt ausgewählt ist
+            return SelectedProject != null;
+        }
+
+        private void AddProject(object? parameter)
+        {
+            PrintProjects.Add(new PrintProject
+            {
+                Name = "Testprojekt 1",
+                FilePath = "C:\\Prints\\test1.gcode",
+                PrintedAt = DateTime.Now,
+                LastModifiedAt = DateTime.Now,
+                PrinterUsed = "Prusa i3 MK3S",
+                FilamentUsed = "PLA - Rot",
+                PrintDurationHours = TimeSpan.FromHours(5),
+                ElectricityPrice = 1.50m,
+                FilamentPrice = 11.66m,
+                PrintResult = true
+            });
+        }
+
+        private void DeleteProject(object? parameter)
+        {
+            if (SelectedProject != null)
+            {
+                PrintProjects.Remove(SelectedProject);
+                SelectedProject = null; // Auswahl zurücksetzen
+            }
         }
 
         private void LoadTestData()

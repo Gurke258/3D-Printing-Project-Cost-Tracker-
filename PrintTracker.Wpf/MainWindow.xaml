@@ -12,6 +12,7 @@
         <Grid.RowDefinitions>
             <RowDefinition Height="*"/>
             <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
         <DataGrid Grid.Row="0" ItemsSource="{Binding PrintProjects}" SelectedItem="{Binding SelectedProject}"  AutoGenerateColumns="false" >
             <DataGrid.Columns>
@@ -23,7 +24,7 @@
                 <!--<DataGridTextColumn Header="Drucker" Binding="{Binding PrinterUsed}" Width="100" />-->
             </DataGrid.Columns>
         </DataGrid>
-        <GroupBox Header="Projektdetails" Grid.Row="1" Margin="10">
+        <GroupBox Grid.Row="1" Header="Projektdetails"  Margin="10">
             <GroupBox.Style>
                 <Style TargetType="GroupBox">
                     <!-- Standardmäßig sichtbar -->
@@ -64,6 +65,10 @@
                     <TextBlock Grid.Column="1" Grid.Row="5" Text="{Binding SelectedProject.FilamentPrice, StringFormat=C, ConverterCulture=de-DE}" FontWeight="Light" Margin="5,0,0,0" VerticalAlignment="Center"/>
                 </Grid>
         </GroupBox>
+        <StackPanel Grid.Row="3" Orientation="Horizontal" HorizontalAlignment="center" Margin="10">
+            <Button Content="Neues Projekt hinzufügen" Command="{Binding AddCommand}" Margin="10" Padding="5"/>
+            <Button Content="Projekt löschen"  Command="{Binding DeleteCommand}" Margin="10"  Padding="5"/>
+        </StackPanel>
     </Grid>
     
 </Window>
