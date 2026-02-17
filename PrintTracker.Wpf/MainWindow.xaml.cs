@@ -1,4 +1,5 @@
-﻿using PrintTracker.Wpf.ViewModels;
+﻿using PrintTracker.Core;
+using PrintTracker.Wpf.ViewModels;
 using System.Text;
 using System.Windows;
 using System.Windows.Controls;
@@ -17,10 +18,12 @@ namespace PrintTracker.Wpf
     /// </summary>
     public partial class MainWindow : Window
     {
+
         public MainWindow()
         {
             InitializeComponent();
-            DataContext = new MainViewModel();
+            //DataContext = new MainViewModel();
+            
         }
     }
 }

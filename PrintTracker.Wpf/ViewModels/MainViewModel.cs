@@ -3,6 +3,7 @@ using PrintTracker.Core;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Runtime.Serialization.Formatters;
 using System.Text;
 using System.Windows.Input;
 
@@ -13,6 +14,9 @@ namespace PrintTracker.Wpf.ViewModels
         public ObservableCollection<PrintProject> PrintProjects { get; } = new();
         public ICommand DeleteCommand { get; }
         public ICommand AddCommand { get; }
+        public ICommand SaveCommand { get; }
+        private readonly IStorageService _storageService;
+
 
 
         private PrintProject? _selectedProject;
@@ -22,18 +26,24 @@ namespace PrintTracker.Wpf.ViewModels
             set => SetProperty(ref _selectedProject, value);
         }
 
-        public MainViewModel()
+        public MainViewModel(IStorageService storageService)
         {
             LoadTestData();
             DeleteCommand = new RelayCommand(DeleteProject, CanDeleteProject);
             AddCommand = new RelayCommand(AddProject);
-
+            SaveCommand = new RelayCommand(SaveProjects);
+            _storageService = storageService;
         }
 
         private bool CanDeleteProject(object? parameter)
         {
             // Löschen nur erlauben, wenn ein Projekt ausgewählt ist
             return SelectedProject != null;
+        }
+
+        private void SaveProjects(object? parameter)
+        {
+            _storageService.SaveData(PrintProjects);
         }
 
         private void AddProject(object? parameter)
