@@ -4,12 +4,8 @@ using System.Text;
 
 namespace PrintTracker.Core
 {
-    public interface IStorageService
+    public interface IDialogService
     {
-
-        public void SaveData<T>(T data);
-
-        public T? LoadData<T>(); 
-
+        PrintProject? ShowAddProjectDialog();
     }
 }

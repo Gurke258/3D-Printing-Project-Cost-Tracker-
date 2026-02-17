@@ -16,6 +16,7 @@ namespace PrintTracker.Wpf.ViewModels
         public ICommand AddCommand { get; }
         public ICommand SaveCommand { get; }
         private readonly IStorageService _storageService;
+        private readonly IDialogService _dialogService;
 
 
 
@@ -26,13 +27,14 @@ namespace PrintTracker.Wpf.ViewModels
             set => SetProperty(ref _selectedProject, value);
         }
 
-        public MainViewModel(IStorageService storageService)
+        public MainViewModel(IStorageService storageService, IDialogService dialogService)
         {
-            LoadTestData();
             DeleteCommand = new RelayCommand(DeleteProject, CanDeleteProject);
             AddCommand = new RelayCommand(AddProject);
             SaveCommand = new RelayCommand(SaveProjects);
             _storageService = storageService;
+            _dialogService = dialogService;
+            LoadProjects();
         }
 
         private bool CanDeleteProject(object? parameter)
@@ -46,21 +48,46 @@ namespace PrintTracker.Wpf.ViewModels
             _storageService.SaveData(PrintProjects);
         }
 
+        private void LoadProjects()
+        {
+            var loadedProjects = _storageService.LoadData<ObservableCollection<PrintProject>>();
+            if (loadedProjects != null)
+            {
+                PrintProjects.Clear();
+                foreach (var project in loadedProjects)
+                {
+                    PrintProjects.Add(project);
+                }
+            }
+            else
+            {
+                // Wenn keine Daten geladen werden konnten, werden Testdaten geladen
+                LoadTestData();
+            }
+        }
+
         private void AddProject(object? parameter)
         {
-            PrintProjects.Add(new PrintProject
+
+            var newProject = _dialogService.ShowAddProjectDialog();
+            if (newProject != null)
             {
-                Name = "Testprojekt 1",
-                FilePath = "C:\\Prints\\test1.gcode",
-                PrintedAt = DateTime.Now,
-                LastModifiedAt = DateTime.Now,
-                PrinterUsed = "Prusa i3 MK3S",
-                FilamentUsed = "PLA - Rot",
-                PrintDurationHours = TimeSpan.FromHours(5),
-                ElectricityPrice = 1.50m,
-                FilamentPrice = 11.66m,
-                PrintResult = true
-            });
+                PrintProjects.Add(newProject);
+            }
+
+            //PrintProjects.Add(new PrintProject
+            //{
+            //    Name = "Testprojekt 1",
+            //    FilePath = "C:\\Prints\\test1.gcode",
+            //    PrintedAt = DateTime.Now,
+            //    LastModifiedAt = DateTime.Now,
+            //    PrinterUsed = "Prusa i3 MK3S",
+            //    FilamentUsed = "PLA - Rot",
+            //    PrintDurationHours = TimeSpan.FromHours(5),
+            //    ElectricityPrice = 1.50m,
+            //    FilamentPrice = 11.66m,
+            //    PrintResult = true
+            //});
         }
 
         private void DeleteProject(object? parameter)
@@ -68,7 +95,7 @@ namespace PrintTracker.Wpf.ViewModels
             if (SelectedProject != null)
             {
                 PrintProjects.Remove(SelectedProject);
-                SelectedProject = null; // Auswahl zurücksetzen
+                SelectedProject = null;
             }
         }
 
