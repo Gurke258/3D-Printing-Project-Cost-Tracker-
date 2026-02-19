@@ -75,19 +75,6 @@ namespace PrintTracker.Wpf.ViewModels
                 PrintProjects.Add(newProject);
             }
 
-            //PrintProjects.Add(new PrintProject
-            //{
-            //    Name = "Testprojekt 1",
-            //    FilePath = "C:\\Prints\\test1.gcode",
-            //    PrintedAt = DateTime.Now,
-            //    LastModifiedAt = DateTime.Now,
-            //    PrinterUsed = "Prusa i3 MK3S",
-            //    FilamentUsed = "PLA - Rot",
-            //    PrintDurationHours = TimeSpan.FromHours(5),
-            //    ElectricityPrice = 1.50m,
-            //    FilamentPrice = 11.66m,
-            //    PrintResult = true
-            //});
         }
 
         private void DeleteProject(object? parameter)

@@ -13,6 +13,12 @@ namespace PrintTracker.Wpf.ViewModels
     {
         private PrintProject _newProject;
         public ICommand SaveCommand { get; }
+        public ICommand BrowseFileCommand { get; }
+
+        public List<string> FilamentTypes { get; } = new List<string> { "PLA", "ABS", "PETG", "TPU", "Nylon", "Polycarbonat", "HIPS", "PVA", "ASA", "Wood Filament", "Metal Filament" };
+
+        public List<string> Printers { get; } = new List<string> { "FDM", "SLA", "DLP", "SLS", "PolyJet", "Binder Jetting", "Material Jetting", "Electron Beam Melting (EBM)", "Direct Energy Deposition (DED)" };
+
         public PrintProject NewProject
         {
             get => _newProject;
@@ -23,6 +29,10 @@ namespace PrintTracker.Wpf.ViewModels
         {
             NewProject = new PrintProject { };
             SaveCommand = new RelayCommand(SaveProject);
+            BrowseFileCommand = new RelayCommand(BrowseFile);
+            NewProject.PrintedAt = DateTime.Now;
+            NewProject.LastModifiedAt = DateTime.Now;
+            
         }
 
         private void SaveProject(object? parameter)
@@ -35,6 +45,20 @@ namespace PrintTracker.Wpf.ViewModels
             var window = parameter as Window;
             window.DialogResult = true;
         }
+
+        private void BrowseFile(object? parameter)
+        {
+            var openFileDialog = new Microsoft.Win32.OpenFileDialog
+            {
+                Filter = "G-Code Dateien (*.gcode;*.gc;*.g)|*.gcode;*.gc;*.g|Alle Dateien (*.*)|*.*"
+            };
+            if (openFileDialog.ShowDialog() == true)
+            {
+                NewProject.FilePath = openFileDialog.FileName;
+            }
+        }
+
+        
 
     }
 }

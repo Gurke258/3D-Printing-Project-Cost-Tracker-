@@ -7,7 +7,7 @@
         xmlns:viewmodels="clr-namespace:PrintTracker.Wpf.ViewModels"
         d:DataContext="{d:DesignInstance Type=viewmodels:MainViewModel, IsDesignTimeCreatable=False}"
         mc:Ignorable="d"
-        Title="3D-Print Project Tracker" Height="800" Width="1200" ResizeMode="NoResize">
+        Title="3D-Print Project Tracker" Height="800" Width="1200" ResizeMode="NoResize" WindowStartupLocation="CenterOwner">
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="*"/>
@@ -58,7 +58,7 @@
                     <Label  Grid.Column="0" Grid.Row="2" Content="zuletzt geändert:" FontWeight="Light"/>
                     <TextBlock Grid.Column="1" Grid.Row="2" Text="{Binding SelectedProject.LastModifiedAt, StringFormat=dd.MM.yyyy HH:mm}" FontWeight="Light" Margin="5,0,0,0" VerticalAlignment="Center"/>
                     <Label  Grid.Column="0" Grid.Row="3" Content="Druckdauer:" FontWeight="Light"/>
-                    <TextBlock Grid.Column="1" Grid.Row="3" Text="{Binding SelectedProject.PrintDurationHours}" FontWeight="Light" Margin="5,0,0,0" VerticalAlignment="Center"/>
+                    <TextBlock Grid.Column="1" Grid.Row="3" Text="{Binding SelectedProject.PrintDurationHours, StringFormat={}{0:hh}:{0:mm}}" FontWeight="Light" Margin="5,0,0,0" VerticalAlignment="Center"/>
                     <Label  Grid.Column="0" Grid.Row="4" Content="Strompreis:" FontWeight="Light"/>
                     <TextBlock Grid.Column="1" Grid.Row="4" Text="{Binding SelectedProject.ElectricityPrice, StringFormat=C, ConverterCulture=de-DE}" FontWeight="Light" Margin="5,0,0,0" VerticalAlignment="Center"/>
                     <Label  Grid.Column="0" Grid.Row="5" Content="Filamentpreis:" FontWeight="Light"/>
