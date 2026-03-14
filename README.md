@@ -18,10 +18,10 @@ Dieses Projekt befindet sich in der aktiven Entwicklung. Aktuell ist die **Maste
 ![App Preview](https://via.placeholder.com/800x450.png?text=Screenshot+kommt+bald)
 
 ## 🏗 Geplante Features
-- [ ] **Data Persistence:** Speichern der Projektdaten in JSON-Dateien oder einer lokalen SQLite-Datenbank.
-- [ ] **Cost Calculation:** Automatisierte Berechnung der Gesamtkosten pro Druck (Strom + Filament).
-- [ ] **Commanding:** Implementierung von `RelayCommand` zum Hinzufügen und Löschen von Projekten.
-- [ ] **Charts:** Visualisierung des Filamentverbrauchs über die Zeit.
+- [x] **Data Persistence:** Speichern der Projektdaten in JSON-Dateien oder einer lokalen SQLite-Datenbank.
+- [x] **Cost Calculation:** Automatisierte Berechnung der Gesamtkosten pro Druck (Strom + Filament).
+- [x] **Commanding:** Implementierung von `RelayCommand` zum Hinzufügen und Löschen von Projekten.
+- [x] **Charts:** Visualisierung des Filamentverbrauchs über die Zeit.
 
 ## ⚙️ Installation
 1. Klone das Repository:  
